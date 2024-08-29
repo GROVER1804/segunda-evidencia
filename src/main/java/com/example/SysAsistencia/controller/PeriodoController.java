@@ -1,0 +1,41 @@
+package com.example.SysAsistencia.controller;
+
+import com.example.SysAsistencia.modelo.Periodo;
+import com.example.SysAsistencia.service.PeriodoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/periodo")
+public class PeriodoController {
+
+    @Autowired
+    private PeriodoService periodoService;
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Periodo>> findAll() {
+        List<Periodo> p=periodoService.obtenerPeriodos();
+        return ResponseEntity.ok(p);
+    }
+
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Periodo> findByPeriodo(@PathVariable Long id) {
+        Periodo p=periodoService.obtenerPeriodo(id);
+        return ResponseEntity.ok(p);
+
+    }
+
+
+    @PostMapping("/guardar")
+    public void guardar(@RequestBody Periodo periodo) {
+        periodoService.guardarPeriodo(periodo);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public void eliminar(@PathVariable Long id) {
+        periodoService.eliminarPeriodo(id);
+    }
+}
